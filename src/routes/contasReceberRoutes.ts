@@ -3,6 +3,6 @@ import contasReceberController from "../controllers/contasReceberController";
 
 const router = Router();
 
-router.get("/contas-receber", contasReceberController.getContasReceber);
+router.get("/receber", contasReceberController.getContasReceber);
 
 export default router;

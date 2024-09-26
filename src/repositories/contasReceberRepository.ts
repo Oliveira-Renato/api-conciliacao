@@ -32,7 +32,7 @@ const findAll = async (queryParams: QueryParams) => {
     const json = await xml2js.parseStringPromise(response.data, {
       mergeAttrs: true,
     });
-    console.log(json)
+    
     return json;
   } catch (error) {
     throw new Error("Erro ao buscar dados da API da Tiny");
