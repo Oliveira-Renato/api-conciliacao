@@ -1,10 +1,31 @@
 import redeRepository from "../repositories/redeRepository";
 
-const getRedeTransactions = async () => {
+const getRedeTransactions = async (
+  period: string,
+  pageSize: string,
+  startDate: string,
+  endDate: string,
+  startTime: string,
+  endTime: string,
+  orderByName: string,
+  orderByDirection: string,
+  orderId: string
+) => {
   try {
-    return await redeRepository.fetchRedeTransactions();
+    return await redeRepository.fetchRedeTransactions(
+      period,
+      pageSize,
+      startDate,
+      endDate,
+      startTime,
+      endTime,
+      orderByName,
+      orderByDirection,
+      orderId
+    );
   } catch (error) {
-    throw new Error("Erro ao buscar transações");
+    console.error("Erro ao buscar transações: ", error);
+    throw new Error("Erro ao buscar transações no serviço");
   }
 };
 

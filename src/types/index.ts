@@ -1,37 +1,37 @@
 // Definindo a interface para os parâmetros esperados
 export interface QueryParams {
-    nome_cliente?: string;
-    numero_doc?: string;
-    numero_banco?: string;
-    data_ini_emissao?: string;
-    data_fim_emissao?: string;
-    data_ini_vencimento?: string;
-    data_fim_vencimento?: string;
-    situacao?: string;
-    id_origem?: string;
-  }
+  nome_cliente?: string;
+  numero_doc?: string;
+  numero_banco?: string;
+  data_ini_emissao?: string;
+  data_fim_emissao?: string;
+  data_ini_vencimento?: string;
+  data_fim_vencimento?: string;
+  situacao?: string;
+  id_origem?: string;
+}
 
-export interface TransactionDetailReportResponse  {
+export interface TransactionDetailReportResponse {
   "rapi-response": {
     header: {
       errorCode: string[];
       errorMsg: string[];
       command: string[];
       time: string[];
-    }[];
+    };
     result: {
       resultSetInfo: {
-        totalNumberOfRecords: string[];
-        pageToken: string[];
-        pageNumber: string[];
-        numberOfPages: string[];
-      }[];
+        totalNumberOfRecords: string;
+        pageToken: string;
+        pageNumber: string;
+        numberOfPages: string;
+      };
       records: {
         record: {
-          transactionId: string[];
-          referenceNumber: string[];
-          transactionType: string[];
-          transactionAmount: string[];
+          transactionId: string;
+          referenceNumber: string;
+          transactionType: string;
+          transactionAmount: string;
           shippingAmount: string[];
           transactionDate: string[];
           orderId: string[];
@@ -88,7 +88,7 @@ export interface TransactionDetailReportResponse  {
           brandTransactionID: string[];
           brandMac: string[];
         }[];
-      }[];
-    }[];
+      };
+    };
   };
 }

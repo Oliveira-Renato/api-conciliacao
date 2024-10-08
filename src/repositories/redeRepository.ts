@@ -11,16 +11,17 @@ const merchantID = process.env.REDE_MERCHANT_ID || "";
 const merchantKEY = process.env.REDE_MERCHANT_KEY || "";
 
 // Função para realizar uma requisição para API da rede
-async function fetchRedeTransactions () {
-  const period = "";
-  const pageSize = "";
-  const startDate = "";
-  const endDate = "";
-  const startTime = "";
-  const endTime = "";
-  const orderByName = "";
-  const orderByDirection = "";
-
+async function fetchRedeTransactions(
+  period: string,
+  pageSize: string,
+  startDate: string,
+  endDate: string,
+  startTime: string,
+  endTime: string,
+  orderByName: string,
+  orderByDirection: string,
+  orderId: string
+): Promise<TransactionDetailReportResponse | null> {
   try {
     // Corpo da requisição com o XML
     const xmlRequest = `
@@ -30,29 +31,32 @@ async function fetchRedeTransactions () {
               <merchantKey>${merchantKEY}</merchantKey>
           </verification>
           <command>transactionDetailReport</command>
-            <request>
-                <filterOptions>
-                    <orderId>0A0104AB:01921F664D6A:B324:56294FFD</orderId>
-                    <period>${period}</period>
-                    <pageSize>${pageSize}</pageSize>
-                    <startDate>${startDate}</startDate>
-                    <endDate>${endDate}</endDate>
-                    <startTime>${startTime}</startTime>
-                    <endTime>${endTime}</endTime>
-                    <orderByName>${orderByName}</orderByName>
-                    <orderByDirection>${orderByDirection}</orderByDirection>
-                </filterOptions>
-            </request>
+          <request>
+              <filterOptions>
+                  <orderId>${orderId}</orderId>
+                  <period>${period}</period>
+                  <pageSize>${pageSize}</pageSize>
+                  <startDate>${startDate}</startDate>
+                  <endDate>${endDate}</endDate>
+                  <startTime>${startTime}</startTime>
+                  <endTime>${endTime}</endTime>
+                  <orderByName>${orderByName}</orderByName>
+                  <orderByDirection>${orderByDirection}</orderByDirection>
+              </filterOptions>
+          </request>
       </rapi-request>
     `;
 
-    const response = await axios.post(`${baseURL}`, xmlRequest );
-    const json: TransactionDetailReportResponse = await xml2js.parseStringPromise(response.data, {mergeAttrs: true});
+    const response = await axios.post(`${baseURL}`, xmlRequest);
+    const json: TransactionDetailReportResponse =
+      await xml2js.parseStringPromise(response.data, { mergeAttrs: true });
 
-    return json["rapi-response"].result;
+    return json;
+    
   } catch (error) {
+    console.error("Erro ao buscar transações: ", error);
     throw new Error("Erro ao buscar transações da Rede");
   }
-};
+}
 
 export default { fetchRedeTransactions };
