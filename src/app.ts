@@ -1,13 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import contasReceberRoutes from "./routes/contasReceberRoutes";
 import redeRoutes from "./routes/redeRoutes";
 
 dotenv.config();
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 //importa rotas
 app.use("/api/contas", contasReceberRoutes);

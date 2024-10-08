@@ -51,7 +51,7 @@ async function fetchRedeTransactions () {
 
     return json["rapi-response"].result;
   } catch (error) {
-    console.error("Erro ao buscar transações: ", error);
+    throw new Error("Erro ao buscar transações da Rede");
   }
 };
 

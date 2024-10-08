@@ -4,7 +4,7 @@ const getRedeTransactions = async () => {
   try {
     return await redeRepository.fetchRedeTransactions();
   } catch (error) {
-    console.error("Erro ao buscar transações: ", error);
+    throw new Error("Erro ao buscar transações");
   }
 };
 
