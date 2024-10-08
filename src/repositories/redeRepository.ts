@@ -18,10 +18,13 @@ async function fetchRedeTransactions(
   endDate: string,
   startTime: string,
   endTime: string,
-  orderByName: string,
-  orderByDirection: string,
+  pOrderByName: string,
+  pOrderByDirection: string,
   orderId: string
 ): Promise<TransactionDetailReportResponse | null> {
+  const orderByName = "transactionDate";  // Exemplo de campo para ordenação
+  const orderByDirection = "asc";         // Pode ser "asc" ou "desc"
+  console.log("id order", orderId);
   try {
     // Corpo da requisição com o XML
     const xmlRequest = `
@@ -34,8 +37,7 @@ async function fetchRedeTransactions(
           <request>
               <filterOptions>
                   <orderId>${orderId}</orderId>
-                  <period>${period}</period>
-                  <pageSize>${pageSize}</pageSize>
+                  <pageSize>100</pageSize>
                   <startDate>${startDate}</startDate>
                   <endDate>${endDate}</endDate>
                   <startTime>${startTime}</startTime>
@@ -51,8 +53,8 @@ async function fetchRedeTransactions(
     const json: TransactionDetailReportResponse =
       await xml2js.parseStringPromise(response.data, { mergeAttrs: true });
 
-    return json;
-    
+    return json["rapi-response"].result;
+
   } catch (error) {
     console.error("Erro ao buscar transações: ", error);
     throw new Error("Erro ao buscar transações da Rede");
