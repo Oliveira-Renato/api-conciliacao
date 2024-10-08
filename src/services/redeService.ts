@@ -1,28 +1,8 @@
 import redeRepository from "../repositories/redeRepository";
 
-const getRedeTransactions = async (
-  period: string,
-  pageSize: string,
-  startDate: string,
-  endDate: string,
-  startTime: string,
-  endTime: string,
-  orderByName: string,
-  orderByDirection: string,
-  orderId: string
-) => {
+const getRedeTransactions = async (transactionId: string) => {
   try {
-    return await redeRepository.fetchRedeTransactions(
-      period,
-      pageSize,
-      startDate,
-      endDate,
-      startTime,
-      endTime,
-      orderByName,
-      orderByDirection,
-      orderId
-    );
+    return await redeRepository.fetchRedeTransactions(transactionId);
   } catch (error) {
     console.error("Erro ao buscar transações: ", error);
     throw new Error("Erro ao buscar transações no serviço");
