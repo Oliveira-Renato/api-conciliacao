@@ -32,8 +32,14 @@ const findAll = async (queryParams: QueryParams) => {
     const json = await xml2js.parseStringPromise(response.data, {
       mergeAttrs: true,
     });
-    
-    return json;
+
+    if (!json.retorno) {
+      throw new Error("Nenhuma conta encontrada.");
+    }
+
+    const { contas } = json.retorno;
+
+    return contas;
   } catch (error) {
     throw new Error("Erro ao buscar dados da API da Tiny");
   }

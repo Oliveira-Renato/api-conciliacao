@@ -6,7 +6,7 @@ const getContasReceber = async (req: Request, res: Response) => {
     const contas = await contasReceberService.getAll(req.query);
     res.status(200).json(contas);
   } catch (error) {
-    res.status(500).json({ error: "Erro ao buscar constas a receber" });
+    res.status(500).json({ error: "Erro ao buscar contas a receber" });
   }
 };
 
