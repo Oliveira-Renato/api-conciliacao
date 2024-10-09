@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import redeService from "../services/redeService";
-import { ApiResponse } from "../types";
 
 const getRedeTransactions = async (req: Request, res: Response) => {
   try {

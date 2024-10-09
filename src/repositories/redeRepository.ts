@@ -10,13 +10,23 @@ const baseURL = process.env.REDE_BASE_URL || "https://app.userede.com.br";
 const merchantID = process.env.REDE_MERCHANT_ID || "";
 const merchantKEY = process.env.REDE_MERCHANT_KEY || "";
 
+interface ResponseRedeFormated {
+  transactionId:string
+  transactionAmount:string
+  transactionDate:string
+  billingName:string
+  billingEmail:string
+  paymentType:string
+  transactionStatus:string
+}
+
 // Função para realizar uma requisição para API da rede
 async function fetchRedeTransactions(
   transactionId: string
-): Promise<ApiResponse | null> {
+): Promise<ResponseRedeFormated[]>  {
   try {
     // Corpo da requisição com o XML
-    const xmlRequest = `
+    const xmlRequest =`
       <rapi-request>
           <verification>
               <merchantId>${merchantID}</merchantId>
@@ -29,8 +39,8 @@ async function fetchRedeTransactions(
                   <transactionId>${transactionId}</transactionId>
               </filterOptions>
           </request>
-      </rapi-request>
-    `;
+      </rapi-request>`
+    ;
 
     const response = await axios.post(`${baseURL}`, xmlRequest);
     const json: ApiResponse =
@@ -49,7 +59,7 @@ async function fetchRedeTransactions(
     }
 
     // formatando os filtros
-    const formattedResponse = records.map((record) => {
+    const formattedResponse: ResponseRedeFormated[] = records.map((record) => {
       return record.record.map((transaction) => ({
         transactionId: transaction.transactionId[0], // Aqui já garantimos que é um array
         transactionAmount: transaction.transactionAmount[0],
@@ -62,7 +72,6 @@ async function fetchRedeTransactions(
     }).flat(); // Usando flat() para achatar o array de arrays
 
     return formattedResponse;
-    
   } catch (error) {
     console.error("Erro ao buscar transações: ", error);
     throw new Error("Erro ao buscar transações da Rede");
